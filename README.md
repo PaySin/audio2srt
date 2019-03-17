@@ -10,7 +10,7 @@ use baidu voice-api to add subtitle to a vedio
 5.没有设置超过60s音频再分割，如果讲话时间较长可能会得到的错误结果较多（后续应该会改进）
 6.时间部分只写到分（m），有需要的朋友可以自己写到小时，不过不建议。
 7.需要改动pydub里的silence.py里的split_on_silence(可以直接改或者另存为)：
-(```)
+
 def split_on_silence(audio_segment, min_silence_len=1000, silence_thresh=-16, keep_silence=100,
                      seek_step=1):
     """
@@ -41,4 +41,4 @@ def split_on_silence(audio_segment, min_silence_len=1000, silence_thresh=-16, ke
         endtime.append(end_i)
 
     return chunks,starttime,endtime
-(```)
+
