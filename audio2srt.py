@@ -2,7 +2,7 @@
 """
 Created on Sun Mar 17 09:12:27 2019
 
-@author: jszc
+@author: cindyyao
 """
 
 from pydub import AudioSegment
@@ -12,20 +12,22 @@ from pydub.silence import split_on_silence
 from aip import AipSpeech
 
 #百度验证部分
-APP_ID = '15764890'
-API_KEY = 'K42jOGmhAw96HqqGH6PsK5BY'
-SECRET_KEY = 'Qc8CodLHxw666635Ex5ccdj4NrKO1u35'
+APP_ID = 'your app_ID'
+API_KEY = 'your API_KEY'
+SECRET_KEY = 'your Secret_key'
 client = AipSpeech(APP_ID, API_KEY, SECRET_KEY)
 
-sound=AudioSegment.from_wav('E:/YPX/yinping/origin.wav')
+#读取音频 预处理
+sound=AudioSegment.from_wav('.yinping/origin.wav')
 sound=sound.set_frame_rate(16000)
 sound=sound.set_channels(1)
 
+#切割音频
 min_silence_len=700
 silence_thresh=-32
 pieces,start_t,end_t=split_on_silence(sound,min_silence_len,silence_thresh)
 silent = AudioSegment.silent(duration=1000)
-
+#将音频转换为wav
 def gotwave(audio):
     new = AudioSegment.empty()
     for inx,val in enumerate(audio):
@@ -41,10 +43,10 @@ def ms2s(ms):
     mpart=(ms//1000)//60
     mpart=str(mpart).zfill(2)
     
-    #输出格式
+    #srt的时间格式
     stype="00:"+mpart+":"+spart+","+mspart
     return stype
-#读取文件
+#读取切割后的文件
 def get_file_content(filePath):
     with open(filePath, 'rb') as fp:
         return fp.read()
